@@ -1,5 +1,5 @@
 namespace mnj.sapas;
-
+// esto da error
 type Structure {
     key field1 : String(1);
         field2 : String(2);
