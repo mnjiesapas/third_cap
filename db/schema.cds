@@ -1,21 +1,24 @@
 namespace mnj.sapas;
 
-type Structure
+// type Structure
+// {
+//     key field1 : String(1) not null;
+//     field2 : String(2);
+//     field3 : String(3);
+//     field4 : Integer;
+// }
+
+entity Entity_a
 {
     key field1 : String(1) not null;
     field2 : String(2);
     field3 : String(3);
-    field4 : Integer;
-}
-
-entity Entity_a
-{
-    fields : Structure;
+    field4 : Integer;        
 }
 
 entity Entity_b
 {
-    key field1 : String(1);
+    key field1 : String(1) not null;
     field2 : String(2);
     field3 : String(3);
     field4 : Integer;
@@ -26,23 +29,23 @@ entity Entity_b
 entity P_Entity_a as
     projection on Entity_a
     {
-        key fields.field1 as field1_lite,
-        fields.field2 as field2_lite
+        key field1,
+        field2,
     };
 
 entity S_entity_a_b as
     select from Entity_a
-    inner join Entity_b on Entity_a.fields.field1 = Entity_b.field1
+    inner join Entity_b on Entity_a.field1 = Entity_b.field1
     {
-        key Entity_a.fields.field1 as field1,
-        Entity_a.fields.field2 as field2,
+        key Entity_a.field1,
+        Entity_a.field2,
         Entity_b.field3,
         Entity_b.field4,
     }
-    where Entity_a.fields.field3 in(select field3 from Entity_b
+    where Entity_a.field3 in(select field3 from Entity_b
         where field2 = 'AB')
-    group by Entity_a.fields.field2
-    order by field1;
+    group by Entity_a.field2
+    order by Entity_a.field1;
 
 entity Suppliers
 {
